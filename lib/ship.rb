@@ -7,8 +7,12 @@ class Ship
     @health = length
   end
 
-  def sunk?(ship)
-    if ship.health == 0
+  def hit
+    @health -= 1
+  end
+
+  def sunk?
+    if health == 0
       true
     else 
       false
