@@ -12,13 +12,29 @@ class Cell
   end
 
   def empty?
-   if ship == nil 
-    true 
-   else 
-    false
-   end
+    if ship == nil 
+      true 
+    else 
+      false
+    end
+  end
+  
+  def fire_upon
+    if empty? == false
+      ship.hit
+    else 
+      "This square does not have a ship"
+    end
+  end
+
+  def fired_upon?
+    if ship.health == ship.length
+      false 
+    else 
+      true
+    end
   end
 end
 
-#attriibutes: coordinate, ship
-#methods : place_ship , empty?
+#attriibutes: health,
+#methods : fired_upon?
