@@ -36,7 +36,7 @@ class Cell
         end
       end
     else
-      if flag
+      if flag == true
         if @ship.nil?
           "."
         else
@@ -48,12 +48,3 @@ class Cell
     end
   end
 end
-
-#attriibutes: health,
-#methods : fired_upon?
-
-# "." - when render is called upon a cell that has not been fired upon 
-# "M" - if the cell is fired upon and there is no ship on the cell
-# "H" - if the cell is fired upon and there is a ship on the cell
-# "S" -
-# "X" - when the ship is sunk (aka 0 health)
