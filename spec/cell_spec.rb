@@ -35,11 +35,19 @@ RSpec.describe Cell do
     end
   end
 
-  describe '#render' do
+  describe '#render cell_1' do
     it 'renders on cell_1' do
       expect(@cell_1.render).to eq(".")
       @cell_1.fire_upon
       expect(@cell_1.render).to eq("M")
+    end
+  end
+
+  describe '#render cell_2' do
+    it 'renders on cell_2' do
+      @cell_2.place_ship(@cruiser)
+      expect(@cell_2.render).to eq(".")
+      expect(@cell_2.render(true)).to eq("S")
     end
   end
 end
