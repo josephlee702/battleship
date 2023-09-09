@@ -10,7 +10,7 @@ RSpec.describe Ship do
     end
   end
 
-  describe 'boat gets hit and sunk' do
+  describe '#boat gets hit and sunk' do
     it 'hits the boat and sinks it' do
       cruiser = Ship.new("Cruiser", 3)
       expect(cruiser.health).to eq(3)
