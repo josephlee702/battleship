@@ -50,4 +50,17 @@ RSpec.describe Cell do
       expect(@cell_2.render(true)).to eq("S")
     end
   end
+
+  describe '#hit and sink cruiser' do
+    it 'hits and sinks cruiser' do
+      @cell_2.place_ship(@cruiser)
+      @cell_2.fire_upon
+      expect(@cell_2.render).to eq("H")
+      expect(@cruiser.sunk?).to be false
+      @cruiser.hit
+      @cruiser.hit
+      expect(@cruiser.sunk?).to be true
+      expect(@cell_2.render).to eq("X")
+    end
+  end
 end
