@@ -19,5 +19,3 @@ class Ship
     end
   end
 end
-
-#attributes: name, length, health, sunk?
