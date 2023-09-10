@@ -5,7 +5,7 @@ require './lib/cell'
 RSpec.describe Board do 
   before(:each) do 
     @board = Board.new 
-    # @board.cells
+    @board.cells
     @cruiser = Ship.new("Cruiser", 3)
     @submarine = Ship.new("Submarine", 2 )
   end
