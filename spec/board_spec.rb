@@ -80,4 +80,10 @@ RSpec.describe Board do
     end
   end
 
+  describe '#overlapping' do 
+    it 'Avoids overlapping' do 
+      @board.place(@cruiser, ["A1", "A2", "A3"])
+      expect(@board.valid_placement?(@submarine, ["A1", "B1"])).to be(false)
+    end
+  end
 end
