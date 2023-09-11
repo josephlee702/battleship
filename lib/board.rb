@@ -5,11 +5,11 @@ class Board
     build_board #calls build_board to add cells to the board
   end
   def build_board
-    ('A'..'D').each do |letter| # iterates through the rows ('A' to 'D') and columns (1 to 4) and creates unique coordinates for each cell
-      (1..4).each do |number|
-        coordinate = "#{letter}#{number}"
-        cell_default = Cell.new(coordinate) #initializes a cell with a Cell object and stores it into the @cell hash 
-        @cells[coordinate] = cell_default
+    ('A'..'D').each do |letter| #starts an outer loop that iterates through the rows of the board. It uses the range ('A'..'D')  loop assigns the current row letter to the variable letter
+      (1..4).each do |number|#starts an inner loop that iterates through the columns of the board. It uses the range (1..4) - loop assigns the current column number to the variable number.
+        coordinate = "#{letter}#{number}" #combines the current letter and number to create a unique coordinate for the current cell. Example:  if letter is 'A' and number is 1, it creates the coordinate 'A1'
+        cell_default = Cell.new(coordinate) #initializes a new cell object using the Cell class, passing the coordinate as an argument. Creates a cell for the coordinate
+        @cells[coordinate] = cell_default #stores the cell object (cell_default) into the @cells hash using the coordinate as the key. This way it has @cells populated with cell onject representing each coordinate 
       end
     end
   end
@@ -21,23 +21,23 @@ class Board
     @cells.include?(coordinate) #if coordinate in hash return true if not return false
   end
 
-  def valid_placement?(ship, placement_coordinates) #makes sure placement of the ship is valid acoording to the rules
-    if ship.length != placement_coordinates.length #checks if the length of the ship matches the number of placement coordinates if not return false
+  def valid_placement?(ship, placement_coordinates) #takes two arguments: ship (representing the ship being placed) and placement_coordinates (representing the coordinates where the ship is being placed).
+    if ship.length != placement_coordinates.length #hecks if the length of the ship (the number of cells it occupies) is not equal to the number of placement coordinates provided. If they are not equal, it means the ship cannot fit into the specified coordinates, and the method returns false
       false
-    elsif occupied_cells(placement_coordinates) #checks if the coordinate is occupied by a ship, (occupied_cells) if they are occupied return false
+    elsif occupied_cells(placement_coordinates) #checks if any of the coordinates in placement_coordinates are already occupied by another ship using the coccupied method. If cells are occupied this mean the placement is invalid and will be false 
       false
-    elsif coordinate_horizontal_letters_logic(placement_coordinates) && coordinate_horizontal_numbers_logic(ship, placement_coordinates) || coordinate_vertical_number_logic(placement_coordinates) && coordinate_verticle_letter_logic(ship, placement_coordinates) #checks if they are horizontal or vertical if they do true if not false
-      true
-    else false
-    end
+    elsif coordinate_horizontal_letters_logic(placement_coordinates) && coordinate_horizontal_numbers_logic(ship, placement_coordinates) || coordinate_vertical_number_logic(placement_coordinates) && coordinate_verticle_letter_logic(ship, placement_coordinates)
+      true #method checks if the placement coordinates are aligned horizontally# coordinate horizontal number logic checks if the placement coordinates are consecutive numbers and have the same length as the ship.# coordinate_vertical_number_logic(placement_coordinates) checks if the placement coordinates are aligned vertically 
+    else false ##coordinate_verticle_letter_logic(ship, placement_coordinates)checks if the placement coordinates are consecutive letters and have the same length as the ship. If all of these conditions are met the placement is valid but if none of the conditions are met then placement id false
+    end #Example placement_coordinates represent a horizontal placement with consecutive numbers and the correct ship length, meeting the conditions checked by coordinate_horizontal_letters_logic and coordinate_horizontal_numbers_logic would return true if all condtions are met
   end
 
-  def coordinate_horizontal_letters_logic(placement_coordinates) 
-    letters = placement_coordinates.map do |coordinate| 
-    coordinate[0]
+  def coordinate_horizontal_letters_logic(placement_coordinates) #takes an argument 
+    letters = placement_coordinates.map do |coordinate| #letters = store an array of letters that represent the horizontal coordinates #starts an iteration over each coordinate in the placement_coordinates array. each coordinate is a string like "A1" "B2" code will be applied to each coordinate
+    coordinate[0] #example placement_coordinates is ["A1", "A2", "A3"] then comes in coordinate[0] which would extract the letter "A" from the coordinate  
     end
-    letters.uniq.length == 1
-  end
+    letters.uniq.length == 1 #unique removes duplicates in the letter array, before .uniq = ["A","A", "A"] and after uniq["A"]
+  end # The .length == 1 means that all the coordinates had the same letter, indicating that the placement is horizontal, as all the coordinates share the same row. if coordinates are not equal to 1 this means its not horizontal# Exmaple ["A"], the length is 1, so the condition letters.uniq.length == 1 evaluates to true # Example that does not collow this array ["A", "B"], the length is not 1, so the condition letters.uniq.length == 1 evaluates to false,
 
   def coordinate_horizontal_numbers_logic(ship, placement_coordinates) # takes two arguments: ship, which represents the ship to be placed, and placement_coordinates, which is an array of placement coordinates("A1","A2")# numbers to store the extracted number parts of the coordinates.#uses the map method to iterate through each coordinate in the placement_coordinates array.
     numbers = placement_coordinates.map do |coordinate| #extracts the second character (the number part) using coordinate[1] converts the number part into an integer. Integers are stored in the numbers array.
@@ -65,14 +65,14 @@ class Board
   #first condition letters == (letters.min..letters.max).to_a checks that the ASCII codes form a contiguous range, making sure that the placement is vertical and consecutive . #second condition = letters.length == ship.length) checks that the number of coordinates matches the ship's length.
 
   def place(ship, placement_coordinates)  #places a ship on the board by marking the corresponding cells as filled with the type of ship.generates an array representing a contiguous range of ASCII codes.Example =  if letters is [65, 66, 67], this part produces [65, 66, 67], as these are consecutive ASCII codes for 'A', 'B', and 'C'.
-    placement_coordinates.each do |new_coordinate|
-      @cells[new_coordinate].place_ship(ship)
-    end
-  end
+    placement_coordinates.each do |new_coordinate| #two arguments: ship (representing the ship to be placed) and placement_coordinates (representing the coordinates where the ship will be placed)
+      @cells[new_coordinate].place_ship(ship) #line begins an iteration through each coordinate in the placement_coordinates array
+    end # @cells[new_coordinate].place_ship(ship): This line accesses the @cells hash using the new_coordinate as the key. I
+  end# @cells[new_coordinate] accesses the cell object associated with the new_coordinate on the game board. #.place_ship(ship) is a method from the cell object
 
-  def occupied_cells(placement_coordinates) #checks coordinates are occupied by a ship 
-    placement_coordinates.each do |new_coordinate| #Returns ship object if cell is filled or "nil" if they are not filled up
-      return @cells[new_coordinate].ship
+  def occupied_cells(placement_coordinates) # one argument: placement_coordinates, which is an array of coordinates to check.
+    placement_coordinates.each do |new_coordinate| #starts an iteration through each coordinate in the placement_coordinates array.
+      return @cells[new_coordinate].ship #accesses the @cells hash using new_coordinate as the key #@cells[new_coordinate] accesses the cell object associated with the new_coordinate on the game board.ship - retrieves the ship object associated with the cell. if empty it will return nil
     end
   end
 
