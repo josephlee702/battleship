@@ -1,9 +1,11 @@
 class Board
   attr_reader :cells #attribute reader for the `cells` instance variable, allowing you to access the board's cells from outside the class.
+
   def initialize #instance variable `@cells`, which is a hash that represents the board's cells. The default value for each cell is set to `0`.
     @cells = Hash.new(0)
     build_board #calls build_board to add cells to the board
   end
+
   def build_board
     ('A'..'D').each do |letter| #starts an outer loop that iterates through the rows of the board. It uses the range ('A'..'D')  loop assigns the current row letter to the variable letter
       (1..4).each do |number|#starts an inner loop that iterates through the columns of the board. It uses the range (1..4) - loop assigns the current column number to the variable number.
@@ -16,7 +18,7 @@ class Board
   #('A'..'D').each do |letter| iterates through each row represented by 'A'- 'D' letters are used to see the letters on the board 
   #(1..4).each do |number| iteraties through numbers in each row and are used to see the numbers on the board 
   #coordinate = "#{letter}#{number}" coordinate are made by combinding the row number and letter
-  #
+
   def valid_coordinate?(coordinate) #checks if a given coordinate is valid by verifying if it exists in the `@cells` hash
     @cells.include?(coordinate) #if coordinate in hash return true if not return false
   end
@@ -85,6 +87,7 @@ class Board
       (1..4).each do |number|  #starts another loop that iterates through each column, represented by the numbers 1 to 4 in the row 
         coordinate = "#{letter}#{number}" #onstructs the coordinate for the current cell by combining the current row letter and number for example in the #{letter} would go letter A and in the #{number} number 1 goes into it 
   
+      #SEE IF WE CAN WRITE A HELPER METHOD / REFACTOR FOR THIS
         if user == true
           cell_content = @cells[coordinate].render(true) #calls render method coordinate passing true which will reveal the contnet 
         else
@@ -93,7 +96,7 @@ class Board
   
         letter_cells << cell_content #add the call content to the letter_cells array for the row its on 
       end
-  
+      
       row_string = "#{letter} #{letter_cells.join(' ')}" ##{letter} is a placeholder that gets replaced with the current letter #letters ('A','B','C')
       puts row_string #.join(' ')- takes each element of the letter_cells array, adds a space between them, and combines them into one string
     end
