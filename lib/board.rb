@@ -75,7 +75,29 @@ class Board
       return @cells[new_coordinate].ship
     end
   end
+
+  def render(user = false) #takes an optional argument user, which is set to false by default.
+    puts "  1 2 3 4" #displays the column headers "1 2 3 4" at the top of the game board.
   
+    ('A'..'D').each do |letter| # line starts a loop that iterates through each row, represented by the letters 'A' to 'D'.
+      letter_cells = [] #letter_cells to store the contents of the cells in the current row.
+  
+      (1..4).each do |number|  #starts another loop that iterates through each column, represented by the numbers 1 to 4 in the row 
+        coordinate = "#{letter}#{number}" #onstructs the coordinate for the current cell by combining the current row letter and number for example in the #{letter} would go letter A and in the #{number} number 1 goes into it 
+  
+        if user == true
+          cell_content = @cells[coordinate].render(true) #calls render method coordinate passing true which will reveal the contnet 
+        else
+          cell_content = @cells[coordinate].render #this does not call the method which hides the content
+        end
+  
+        letter_cells << cell_content #add the call content to the letter_cells array for the row its on 
+      end
+  
+      row_string = "#{letter} #{letter_cells.join(' ')}" ##{letter} is a placeholder that gets replaced with the current letter #letters ('A','B','C')
+      puts row_string #.join(' ')- takes each element of the letter_cells array, adds a space between them, and combines them into one string
+    end
+  end
 end
 
 
