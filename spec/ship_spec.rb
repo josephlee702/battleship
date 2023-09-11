@@ -1,4 +1,4 @@
-require './lib/ship'
+require './spec/spec_helper'
 
 RSpec.describe Ship do
   describe '#instantiate' do
