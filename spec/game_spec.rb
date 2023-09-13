@@ -21,7 +21,7 @@ RSpec.describe Game do
     ]
   end
 
-  describe 'Makes it exist'do 
+  describe 'Makes it exist' do 
     it 'makes sure all objects exist' do 
       expect(@computer_board).to be_an_instance_of(Board)
       expect(@player_board).to be_an_instance_of(Board)
@@ -34,9 +34,24 @@ RSpec.describe Game do
     end
   end
 
-  describe 'Makes it exist'do 
-    it 'makes sure all objects exist' do 
-      
+  describe 'Computer setup' do 
+    it '#computer_turns contains coordinates' do 
+      expect(@computer_turns).to eq([])
+      @computer_turns = @computer_board.cells.keys
+      expect(@computer_turns.count).to eq(16)
+      random_coord = [["A2", "A3", "A4"], ["C2", "C3"]]
+      expect(random_coord[0]).to eq(["A2", "A3", "A4"])
+      expect(random_coord[1]).to eq(["C2", "C3"])
+    end
+
+    it '#computer places ship' do 
+      random_coord = [["A2", "A3", "A4"], ["C2", "C3"]]
+      cruiser_coords = random_coord[0]
+      sub_coords = random_coord[1]
+      @computer_board.place(@computer_cruiser, random_coord[0])
+      @computer_board.place(@computer_sub, random_coord[1])
+      expect(@computer_board.cells["A2"].ship).to eq(@computer_cruiser)
+      expect(@computer_board.cells["C2"].ship).to eq(@computer_sub)
     end
   end
 end
