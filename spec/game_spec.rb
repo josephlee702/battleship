@@ -54,4 +54,13 @@ RSpec.describe Game do
       expect(@computer_board.cells["C2"].ship).to eq(@computer_sub)
     end
   end
+
+  describe 'Player setup' do 
+    it '#player places ship' do 
+      @player_board.place(@player_cruiser, ["A1", "A2", "A3"])
+      expect(@player_board.cells["A1"].ship).to eq(@player_cruiser)
+      @player_board.place(@player_sub, ["D2", "D3"])
+      expect(@player_board.cells["D3"].ship).to eq(@player_sub)
+    end
+  end
 end
