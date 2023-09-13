@@ -80,7 +80,6 @@ class Board
     false 
   end
 
-
   def place(ship, placement_coordinates)
     if valid_placement?(ship, placement_coordinates)
       placement_coordinates.each do |new_coordinate| 
@@ -90,24 +89,19 @@ class Board
     else
       return false
     end
-    
   end
 
   def render(user = false)
     puts "  1 2 3 4" 
-  
     ('A'..'D').each do |letter| 
       letter_cells = [] 
-  
       (1..4).each do |number|  
         coordinate = "#{letter}#{number}" 
-
         if user == true
           cell_content = @cells[coordinate].render(true) 
         else
           cell_content = @cells[coordinate].render 
         end
-  
         letter_cells << cell_content 
       end
       

@@ -87,24 +87,6 @@ class Game
     # require 'pry'; binding.pry
   end
 
-
-  #   @computer_turns = @computer_board.cells.keys
-  #   random_coord = @computer_coords.sample
-  #   cruiser_coords = random_coord[0]
-  #   sub_coords = random_coord[1]
-  #   @computer_board.place(@computer_cruiser, cruiser_coords)
-  #   @computer_board.place(@computer_sub, sub_coords)
-  # end
-
-  #provides random starting point for the computer
-  def choose_random_coordinate
-    columns = [1, 2, 3, 4]
-    rows = ['A', 'B', 'C', 'D']
-    random_column = columns.sample
-    random_row = rows.sample
-    random_row + random_column.to_s
-  end
-
   def player_setup
     puts "---------------------------------------------------------"
     puts "I have laid out my ships on the grid. \nYou now need to lay out your two ships.\nThe Cruiser is three units long and the Submarine is two units long."
