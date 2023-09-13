@@ -60,10 +60,10 @@ class Game
     puts "---------------------------------------------------------"
     #why do we need standard input here?
     input = $stdin.gets.chomp
-    if input == "p"
+    if input == "p" || "P"
       game_setup
     else
-      input == "q"
+      input == "q" || "Q"
       return
     end
   end
@@ -196,6 +196,7 @@ class Game
     elsif cell.render == "H"
       "shot on #{coordinate_fired_upon} was a hit"
     else 
+      #would be nice if it told you which ship it sunk
       "shot on #{coordinate_fired_upon} sunk the ship"
     end
   end
