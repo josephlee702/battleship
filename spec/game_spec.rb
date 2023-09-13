@@ -52,6 +52,7 @@ RSpec.describe Game do
       @computer_board.place(@computer_sub, random_coord[1])
       expect(@computer_board.cells["A2"].ship).to eq(@computer_cruiser)
       expect(@computer_board.cells["C2"].ship).to eq(@computer_sub)
+      expect(@computer_board.cells["A2"].ship). to eq(@computer_board.cells["A3"].ship)
     end
   end
 
@@ -72,7 +73,7 @@ RSpec.describe Game do
   end
 
   describe '#turn' do
-    it "checks miss" do
+    it "#checks miss" do
       @computer_turns = @computer_board.cells.keys
       computer_shot = "B1"
       @computer_turns.delete(computer_shot)
@@ -83,14 +84,15 @@ RSpec.describe Game do
       expect(player_cell.render).to eq("M")
     end
 
-    it "checks hit" do
-      @player_board.place(@player_cruiser, "B1 B2 B3")
+    it "#checks hit" do
+      @player_board.place(@player_cruiser, ["B1", "B2", "B3"])
       @computer_turns = @computer_board.cells.keys
       computer_shot = "B1"
       @computer_turns.delete(computer_shot)
       expect(@computer_turns.count).to eq(15)
       player_cell = @player_board.cells["B1"]
       player_cell.fire_upon
+      expect(@player_board.cells["B1"].fired_upon?).to be true
       expect(player_cell.render).to eq("H")
     end
   end
