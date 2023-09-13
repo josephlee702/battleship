@@ -9,15 +9,49 @@ class Game
     @player_sub = Ship.new("submarine", 2)
     @computer_cruiser = Ship.new("cruiser", 3)
     @computer_sub = Ship.new("submarine", 2)
-    @computer_coords = [
-      [["A1", "A2", "A3"], ["C2", "C3"]],
-      [["A1", "A2", "A3"], ["B1", "B2"]],
-      [["A1", "A2", "A3"], ["B2", "B3"]],
-      [["A1", "A2", "A3"], ["C3", "C4"]],
-      [["A2", "A3", "A4"], ["C1", "D1"]],
-      [["A2", "A3", "A4"], ["D1", "D2"]],
-      [["A2", "A3", "A4"], ["D3", "D4"]],
-      [["A2", "A3", "A4"], ["C2", "C3"]],
+    @cruiser_possible_placements = [
+      ['A1', 'A2', 'A3'],
+      ['A2', 'A3', 'A4'],
+      ['B1', 'B2', 'B3'],
+      ['B2', 'B3', 'B4'],
+      ['C1', 'C2', 'C3'],
+      ['C2', 'C3', 'C4'],
+      ['D1', 'D2', 'D3'],
+      ['D2', 'D3', 'D4'],
+      ['A1', 'B1', 'C1'],
+      ['B1', 'C1', 'D1'],
+      ['A2', 'B2', 'C2'],
+      ['B2', 'C2', 'D2'],
+      ['A3', 'B3', 'C3'],
+      ['B3', 'C3', 'D3'],
+      ['A4', 'B4', 'C4'],
+      ['B4', 'C4', 'D4']
+    ]
+    @sub_possible_placements = [
+      ['A1', 'A2'],
+      ['A2', 'A3'],
+      ['A3', 'A4'],
+      ['B1', 'B2'],
+      ['B2', 'B3'],
+      ['B3', 'B4'],
+      ['C1', 'C2'],
+      ['C2', 'C3'],
+      ['C3', 'C4'],
+      ['D1', 'D2'],
+      ['D2', 'D3'],
+      ['D3', 'D4'],
+      ['A1', 'B1'],
+      ['B1', 'C1'],
+      ['C1', 'D1'],
+      ['A2', 'B2'],
+      ['B2', 'C2'],
+      ['C2', 'D2'],
+      ['A3', 'B3'],
+      ['B3', 'C3'],
+      ['C3', 'D3'],
+      ['A4', 'B4'],
+      ['B4', 'C4'],
+      ['C4', 'D4'],
     ]
   end
 
@@ -43,14 +77,34 @@ class Game
   #computer randomly sets up ships on his board
   def computer_setup
     @computer_turns = @computer_board.cells.keys
-    random_coord = @computer_coords.sample
-    cruiser_coords = random_coord[0]
-    sub_coords = random_coord[1]
-    @computer_board.place(@computer_cruiser, cruiser_coords)
-    @computer_board.place(@computer_sub, sub_coords)
+    computer_cruiser_placement = @cruiser_possible_placements.sample
+    @computer_board.place(@computer_cruiser, computer_cruiser_placement)
+    computer_sub_placement = @sub_possible_placements.sample
+    until @computer_board.valid_placement?(@computer_sub, computer_sub_placement)
+      computer_sub_placement = @sub_possible_placements.sample
+    end
+    @computer_board.place(@computer_sub, computer_sub_placement)
+    # require 'pry'; binding.pry
   end
 
-  #we place our ships on the board
+
+  #   @computer_turns = @computer_board.cells.keys
+  #   random_coord = @computer_coords.sample
+  #   cruiser_coords = random_coord[0]
+  #   sub_coords = random_coord[1]
+  #   @computer_board.place(@computer_cruiser, cruiser_coords)
+  #   @computer_board.place(@computer_sub, sub_coords)
+  # end
+
+  #provides random starting point for the computer
+  def choose_random_coordinate
+    columns = [1, 2, 3, 4]
+    rows = ['A', 'B', 'C', 'D']
+    random_column = columns.sample
+    random_row = rows.sample
+    random_row + random_column.to_s
+  end
+
   def player_setup
     puts "---------------------------------------------------------"
     puts "I have laid out my ships on the grid. \nYou now need to lay out your two ships.\nThe Cruiser is three units long and the Submarine is two units long."
