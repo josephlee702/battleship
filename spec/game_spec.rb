@@ -55,12 +55,43 @@ RSpec.describe Game do
     end
   end
 
-  describe 'Player setup' do 
+  describe '#player setup' do 
     it '#player places ship' do 
       @player_board.place(@player_cruiser, ["A1", "A2", "A3"])
       expect(@player_board.cells["A1"].ship).to eq(@player_cruiser)
       @player_board.place(@player_sub, ["D2", "D3"])
       expect(@player_board.cells["D3"].ship).to eq(@player_sub)
+    end
+  end
+
+  describe '#play' do
+    it 'checks who won the game' do
+      computer_wins = @player_cruiser.sunk? && @player_sub.sunk?
+      expect(computer_wins).to be false
+    end
+  end
+
+  describe '#turn' do
+    it "checks miss" do
+      @computer_turns = @computer_board.cells.keys
+      computer_shot = "B1"
+      @computer_turns.delete(computer_shot)
+      expect(@computer_turns.count).to eq(15)
+      player_cell = @player_board.cells["B1"]
+      player_cell.fire_upon
+      expect(player_cell.fired_upon?). to be true
+      expect(player_cell.render).to eq("M")
+    end
+
+    it "checks hit" do
+      @player_board.place(@player_cruiser, "B1 B2 B3")
+      @computer_turns = @computer_board.cells.keys
+      computer_shot = "B1"
+      @computer_turns.delete(computer_shot)
+      expect(@computer_turns.count).to eq(15)
+      player_cell = @player_board.cells["B1"]
+      player_cell.fire_upon
+      expect(player_cell.render).to eq("H")
     end
   end
 end
