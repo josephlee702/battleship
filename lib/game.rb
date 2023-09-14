@@ -71,7 +71,9 @@ class Game
   def game_setup
     computer_setup
     player_setup
-    play 
+    play
+    puts "---------------------------------------------------------"
+    main_menu
   end
 
   #computer randomly sets up ships on his board
