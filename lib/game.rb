@@ -60,10 +60,10 @@ class Game
     puts "---------------------------------------------------------"
     #why do we need standard input here?
     input = $stdin.gets.chomp
-    if input == "p" || "P"
+    if input == ("p" || "P")
       game_setup
     else
-      input == "q" || "Q"
+      input == ("q" || "Q")
       return
     end
   end
@@ -94,6 +94,7 @@ class Game
     puts "I have laid out my ships on the grid. \nYou now need to lay out your two ships.\nThe Cruiser is three units long and the Submarine is two units long."
     @player_board.render(true)
     puts "Enter the squares for the Cruiser (3 spaces):"
+    #TAKE LOWERCASE LETTERS
     puts "ex. 'A1 A2 A3'"
     input = $stdin.gets.chomp
     until @player_board.place(@player_cruiser, input.split(" "))
